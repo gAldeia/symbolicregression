@@ -235,10 +235,10 @@ class SymbolicTransformerRegressor(BaseEstimator):
             for candidate in candidates:
                 candidate["relabed_predicted_tree"] = exchange_node_values(candidate["predicted_tree"], exchanges)
 
-    def retrieve_tree(self, refinement_type=None, dataset_idx=0, all_trees=False, with_infos=False):
+    def retrieve_tree(self, refinement_type=None, tree_idx=0, all_trees=False, with_infos=False):
         self.exchange_tree_features()
-        if dataset_idx == -1: idxs = [_ for _ in range(len(self.tree))] 
-        else: idxs = [dataset_idx]
+        if tree_idx == -1: idxs = [_ for _ in range(len(self.tree))] 
+        else: idxs = [tree_idx]
         best_trees = []
         for idx in idxs:
             best_tree = copy.deepcopy(self.tree[idx])
@@ -260,7 +260,7 @@ class SymbolicTransformerRegressor(BaseEstimator):
                         best_trees.append([best_tree[i]["predicted_tree"] for i in range(len(best_tree))])
                     else:
                         best_trees.append(best_tree[0]["predicted_tree"])
-        if dataset_idx != -1: 
+        if tree_idx != -1: 
             return best_trees[0]
         else: return best_trees
 
